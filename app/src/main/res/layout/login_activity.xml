@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".LoginActivity">
 
 
 
@@ -84,6 +84,7 @@
 
 
             <EditText
+                android:id="@+id/email"
                 android:lines="1"
                 android:hint="e-mail or phone number"
                 android:layout_marginRight="30dp"
@@ -102,6 +103,7 @@
 
 
             <EditText
+                android:id="@+id/password"
                 android:lines="1"
                 android:inputType="textPassword"
                 android:hint="password"
@@ -114,6 +116,7 @@
                 android:layout_gravity="center"
                 android:paddingLeft="40dp"
                 android:paddingRight="40dp"
+                android:onClick="signIn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sign In"/>
