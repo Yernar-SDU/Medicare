@@ -49,7 +49,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun intializeAllClients() {
         for (userClient in userClients){
-            medicareAPI.getClientsById(userClient.id).enqueue(object: Callback<Client>{
+            medicareAPI.getClientsById(userClient.client_id).enqueue(object: Callback<Client>{
                 override fun onResponse(call: Call<Client>, response: Response<Client>) {
                     if(response.isSuccessful){
                         clients.add(response.body()!!)
