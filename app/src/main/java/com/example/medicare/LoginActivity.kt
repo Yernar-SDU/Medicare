@@ -27,9 +27,9 @@ class LoginActivity : AppCompatActivity() {
         DB.sharedPreferences = getPreferences(MODE_PRIVATE)
         Log.i("TAG", "onCreate: ${DB.get_LoggedIn()}")
         if (DB.get_LoggedIn()){
-//            val intent: Intent = Intent(this@LoginActivity,MainActivity::class.java)
-//            intent.putExtra(KEYS.USER,DB.get_user())
-//            startActivity(intent)
+            val intent: Intent = Intent(this@LoginActivity,MainActivity::class.java)
+            intent.putExtra(KEYS.USER,DB.get_user())
+            startActivity(intent)
         }
     }
 
