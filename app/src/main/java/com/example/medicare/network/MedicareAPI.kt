@@ -12,7 +12,6 @@ interface MedicareAPI {
     @POST("login")
     fun login(@Body user: UserCredential): Call<AuthUser>
 
-
     @GET("user")
     fun getUsers(): Call<List<User>>
 
@@ -23,8 +22,15 @@ interface MedicareAPI {
     fun getClientsById(@Path("id") id: Int): Call<Client>
 
 
+    @GET("product/{id}")
+    fun getProductById(@Path("id") id: Int): Call<Product>
+
+
     @GET("userClients/{id}")
     fun getUserClientsById(@Path("id") id: Int): Call<List<UserClients>>
+
+    @GET("clientProduct/{id}")
+    fun getClientProductById(@Path("id") id: Int): Call<List<ClientProducts>>
 
 
 }
