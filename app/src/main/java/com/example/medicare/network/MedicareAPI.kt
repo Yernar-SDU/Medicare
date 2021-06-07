@@ -32,5 +32,36 @@ interface MedicareAPI {
     @GET("clientProduct/{id}")
     fun getClientProductById(@Path("id") id: Int): Call<List<ClientProducts>>
 
+    @GET("productDetails/{id}")
+    fun getProductDetailsById(@Path("id") id: Int): Call<List<ProductDetail>>
+
+    @GET("category")
+    fun getCategories(): Call<List<Category>>
+
+
+    @GET("parts/{id}")
+    fun getPartById(@Path("id") id: Int): Call<Part>
+
+    @GET("partsByIdExtended/{id}")
+    fun getPartByIdExtended(@Path("id") id: Int): Call<MutableList<Part>>
+
+
+    @GET("productsByClientId/{id}")
+    fun getProductsByClientId(@Path("id") id: Int): Call<List<ClientProducts>>
+
+
+    @GET("subCategoriesByParentId/{id}")
+    fun getSubCategoriesByParentId(@Path("id") id: Int): Call<List<Category>>
+
+
+    @GET("clientsByUserId/{id}")
+    fun getClientsByUserId(@Path("id") id: Int): Call<List<Client>>
+
+    @GET("partsByCategoryAndSubCategoryId/{category_id},{sub_category_id}")
+    fun getPartsByCategoryAndSubCategoryId(@Path("category_id") category_id: Int,@Path("sub_category_id") sub_category_id: Int): Call<List<Part>>
+
+    @GET("getPartSize/{service_id},{limb_id}")
+    fun getPartSizeByIDs(@Path("service_id") service_id: Int,@Path("limb_id") limb_id: Int): Call<List<LimbService>>
+
 
 }

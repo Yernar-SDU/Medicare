@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <TextView
+        android:id="@+id/part_id"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:ignore="MissingConstraints" />
+    
+    <TextView
+        android:id="@+id/part_name"
+        android:layout_width="0dp"
+        android:layout_weight="5"
+        android:textSize="13sp"
+        android:textColor="@color/black"
+        android:layout_height="wrap_content"
+        android:text="Адаптер трубный"/>
+
+
+    <EditText
+        android:hint="number"
+        android:id="@+id/part_number"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:textSize="13sp"
+        android:layout_height="wrap_content"
+        android:inputType="number"/>
+
+    <EditText
+        android:textSize="13sp"
+        android:id="@+id/part_size"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:inputType="number"/>
+
+    <ImageButton
+        android:id="@+id/deleteButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_baseline_delete_24"
+        android:background="@color/white"
+        android:layout_gravity="center"/>
+
+</LinearLayout>

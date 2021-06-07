@@ -3,6 +3,7 @@ package com.example.medicare
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
@@ -27,12 +28,11 @@ import retrofit2.Response
 
 class MainActivity : AppCompatActivity() {
     private val medicareAPI: MedicareAPI = NetworkService.medicareAPI
-    private lateinit var userClients: List<UserClients>
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var user: User
     private lateinit var navView: NavigationView
 
-    private var clients: MutableList<Client> = arrayListOf()
+    private var clients: List<Client> = arrayListOf()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -45,7 +45,8 @@ class MainActivity : AppCompatActivity() {
         navView.setNavigationItemSelectedListener { it: MenuItem ->
             Log.i("mineMine0", "onCreate: ${it.itemId}")
             getSupportActionBar()?.setTitle(it.title);
-            supportFragmentManager.beginTransaction().replace(R.id.frameLayout,ProtezFragment().newInstance(it.itemId)).commit()
+            Log.i("test", "onCreate: ${it.itemId}")
+            supportFragmentManager.beginTransaction().replace(R.id.frameLayout,ProtezFragment.newInstance(it.itemId)).commit()
             drawerLayout.closeDrawers()
             true
         }
@@ -59,6 +60,7 @@ class MainActivity : AppCompatActivity() {
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
+
         //Set autologin
         DB.set_LoggedIn(true)
         //get user info
@@ -73,11 +75,8 @@ class MainActivity : AppCompatActivity() {
 
 
     private suspend fun getResultsApi() {
-        delay(1000)
-        initializeUserClientList()
-        delay(1000)
-        initializeAllClients()
-        delay(1000)
+        initializeAllClients(user.id)
+        delay(500)
         setMenu()
     }
 
@@ -90,46 +89,22 @@ class MainActivity : AppCompatActivity() {
         userEmailTextView.text = user.email
     }
 
-    private fun initializeAllClients() {
-        for (userClient in userClients) {
-            medicareAPI.getClientsById(userClient.client_id).enqueue(object : Callback<Client> {
-                override fun onResponse(call: Call<Client>, response: Response<Client>) {
-                    if (response.isSuccessful) {
-                        clients.add(response.body()!!)
-                        Log.i("retrofit", "onResponse clients: ${clients + ""}")
-                    }
+    private fun initializeAllClients(user_id : Int) {
+        medicareAPI.getClientsByUserId(user_id).enqueue(object : Callback<List<Client>>{
+            override fun onResponse(call: Call<List<Client>>, response: Response<List<Client>>) {
+                if(response.isSuccessful){
+                    clients = response.body()!!
                 }
 
-                override fun onFailure(call: Call<Client>, t: Throwable) {
-                    TODO("Not yet implemented")
-                }
-            })
-        }
-
-
-    }
-
-    private fun initializeUserClientList() {
-        medicareAPI.getUserClientsById(user.id).enqueue(
-            object : Callback<List<UserClients>> {
-                override fun onResponse(
-                    call: Call<List<UserClients>>,
-                    response: Response<List<UserClients>>
-                ) {
-                    Log.i("retrofit", "onResponse: " + response.message())
-                    if (response.isSuccessful) {
-                        userClients = response.body()!!
-                        Log.i("retrofit", "onResponse: ${response.body()}")
-                    }
-
-                }
-
-                override fun onFailure(call: Call<List<UserClients>>, t: Throwable) {
-                    Log.i("retrofit", "onFailure: " + t.message)
-                }
             }
-        )
+
+            override fun onFailure(call: Call<List<Client>>, t: Throwable) {
+                TODO("Not yet implemented")
+            }
+        })
     }
+
+
 
     private suspend fun setMenu() {
         withContext(Dispatchers.Main) {
@@ -150,7 +125,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         // Inflate the menu; this adds items to the action bar if it is present.
-
+        val menuInflater: MenuInflater = getMenuInflater()
+        menuInflater.inflate(R.menu.main,menu)
         return true
     }
 
